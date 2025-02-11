@@ -1,0 +1,80 @@
+html,
+body {
+  height: 100%;
+  background: #222d32 !important;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.global-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #48e248;
+}
+
+.login-form {
+  width: 380px;
+  padding: 20px;
+  height: fit-content;
+  background: #1a2226;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.8);
+}
+
+input[type="email"],
+input[type="password"]{
+  width: 100%;
+  background: #1a2226;
+  color: #fff;
+  border: 2px solid #00ff00;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #48e248;
+}
+
+.card-title {
+  font-weight: 900;
+  text-align: center;
+  color: #48e248;
+  margin-bottom: 30px;
+}
+.btn-custom {
+  width: 100%;
+  background: #48e248;
+  color: #000;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 10px;
+  border: none;
+}
+
+.btn-custom:hover {
+  background: #3bc23b;
+}
+.button-link {
+  color: #48e248;
+  text-decoration: none;
+}
+.login-link {
+    text-align: center;
+    margin-top: 15px;
+    color: #fff;
+}
+.login-link a {
+    color: #48e248;
+    text-decoration: none;
+    font-weight: bold;
+}
+.login-link a:hover {
+    text-decoration: underline;
+}

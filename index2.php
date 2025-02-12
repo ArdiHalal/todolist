@@ -33,7 +33,7 @@ $run_q_lists = mysqli_query($conn_todolist, $q_lists);
 <body class="bg-dark text-white">
 <div class="container mt-5">
     <div class="card bg-secondary text-white p-4 shadow-lg">
-        <h2 class="text-center mb-4">📝 To-Do List Ardita</h2>
+        <h2 class="text-center mb-4">📝 To-Do List Ardi</h2>
         
         <!-- Form Tambah List -->
         <form action="tambah_list.php" method="post">

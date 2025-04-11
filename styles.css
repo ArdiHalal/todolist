@@ -1,80 +1,393 @@
-html,
-body {
-  height: 100%;
-  background: #222d32 !important;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+html, body {
+    background-color: #e9ecef; /* Warna background yang lebih soft */
+    color: #495057; /* Warna teks yang lebih gelap untuk kontras */
+    font-family: 'Arial', sans-serif;
 }
 
-.global-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  color: #48e248;
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+/* Header Styling */
+.header-container {
+    background: linear-gradient(135deg, #5c677d, #424b5f);
+    padding: 20px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    text-align: center;
+    color: white;
 }
 
-.login-form {
-  width: 380px;
-  padding: 20px;
-  height: fit-content;
-  background: #1a2226;
-  border-radius: 10px;
-  box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.8);
+.content-container {
+    background: #6c757d;
+    padding: 20px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+} 
+
+.card {
+    background-color: #ffffff; 
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); 
+    padding: 20px;
+    margin-bottom: 20px;
 }
 
-input[type="email"],
-input[type="password"]{
-  width: 100%;
-  background: #1a2226;
-  color: #fff;
-  border: 2px solid #00ff00;
-  border-radius: 10px;
-  padding: 10px;
-  margin-bottom: 15px;
+.form-control {
+    background-color: #f8f9fa; 
+    border: 1px solid #ced4da; 
+    color: #495057; 
+    border-radius: 8px;
+    padding: 10px;
 }
 
-input:focus {
-  outline: none;
-  border-color: #48e248;
+.form-control::placeholder {
+    color: #adb5bd; 
 }
 
-.card-title {
-  font-weight: 900;
-  text-align: center;
-  color: #48e248;
-  margin-bottom: 30px;
+.form-control:focus {
+    background-color: #ffffff; 
+    color: #495057; 
+    border-color: #a0c4ff; 
+    box-shadow: 0 0 8px rgba(160, 196, 255, 0.3);
 }
+
+h3, h2, p {
+    color: #343a40 !important; 
+}
+
+.btn-primary {
+    background-color: #a0c4ff; 
+    border-color: #a0c4ff;
+    color: white;
+    border-radius: 8px;
+    padding: 10px 15px;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #8ab4f8;
+    border-color: #8ab4f8;
+}
+
+.btn-danger {
+    background-color: #ffadad; 
+    border-color: #ffadad;
+    border-radius: 8px;
+    padding: 10px 15px;
+    
+}
+
+.btn-danger:hover {
+    background-color: #ff9b9b; 
+    border-color: #ff9b9b;
+}
+
+/* CSS untuk mengatur posisi task panel dan subtask panel */
+.center-task-panel {
+    margin: 0 auto; /* Menengahkan task panel */
+    transition: all 0.5s ease; /* Animasi perpindahan */
+}
+
+#task-panel {
+    width: 50%; /* Lebar task panel */
+}
+
+#subtask-panel {
+    display: none; /* Awalnya subtask panel disembunyikan */
+    width: 50%; /* Lebar subtask panel */
+    transition: all 0.5s ease; /* Animasi perpindahan */
+}
+
+/* Ketika subtask panel muncul, task panel akan bergeser ke kiri */
+#subtask-panel.show {
+    display: block; /* Tampilkan subtask panel */
+    /* margin-left: 20px; Jarak antara task panel dan subtask panel */
+}
+
+/* Ketika subtask panel muncul, task panel akan bergeser ke kiri */
+#task-panel.hide {
+    margin-left: 0; /* Geser task panel ke kiri */
+}
+
+.loading-spinner {
+    display: none;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #a0c4ff; 
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 .btn-custom {
-  width: 100%;
-  background: #48e248;
-  color: #000;
-  font-weight: bold;
-  border-radius: 10px;
-  padding: 10px;
-  border: none;
+    transition: all 0.3s ease;
 }
 
 .btn-custom:hover {
-  background: #3bc23b;
+    transform: scale(1.05);
 }
-.button-link {
-  color: #48e248;
-  text-decoration: none;
-}
-.login-link {
+
+.navbar {
+    background-color: #a0c4ff; 
+    color: white;
+    padding: 15px;
     text-align: center;
-    margin-top: 15px;
+}
+.navbar .toggle-sidebar {
+    cursor: pointer;
+    font-size: 20px;
+}
+.navbar .user-info {
+    display: flex;
+    align-items: center;
+}
+.navbar .user-info span {
+    justify-content: center;
+}
+
+.sidebar {
+    height: 100vh;
+    width: 220px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color:#697b99; 
+    padding-top: 20px;
+    transition: all 0.3s ease;
+    color: #ffffff;
+}
+
+.sidebar a {
+    padding: 12px 20px;
+    display: block;
+    color: #ffffff; 
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #a0c4ff; 
+    color: white;
+}
+
+.menu-toggle {
+    position: absolute;
+    top: 10px;
+    left: 210px;
+    background-color: #a0c4ff; 
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1000;
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        left: -200px;
+    }
+    .menu-toggle {
+        display: block;
+        left: 10px;
+    }
+    .sidebar.active {
+        left: 0;
+    }
+}
+/* CSS untuk Dropdown Filter */
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-toggle {
+    cursor: pointer;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 10;
+    display: block;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    padding: 5px 0;
+} 
+
+.d-none {
+    display: none;
+}
+
+.border-danger {
+    border: 2px solid #dc3545 !important;
+}
+.text-checked {
+    color: #6c757d;
+}
+.badge {
+    font-size: 0.8em;
+    margin-left: 10px;
+}
+.task-card {
+    transition: all 0.3s ease;
+}
+.task-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* ===============================
+   Styling Khusus Halaman Edit Task
+   =============================== */
+   body#edit-task-page {
+    background: linear-gradient(135deg, #1e1e2f, #2c3e50);
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
     color: #fff;
 }
-.login-link a {
-    color: #48e248;
-    text-decoration: none;
-    font-weight: bold;
+
+.edit-task-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 30px 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 500px;
 }
-.login-link a:hover {
-    text-decoration: underline;
+
+.edit-task-container h2 {
+    text-align: center;
+    margin-bottom: 24px;
+    font-size: 28px;
+    font-weight: 600;
 }
+
+.edit-task-form label {
+    display: block;
+    margin: 12px 0 6px;
+    font-weight: 500;
+}
+
+.edit-task-form .form-control {
+    width: 100%;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    outline: none;
+}
+
+.edit-task-form select.form-control {
+    appearance: none;
+}
+
+.edit-task-form .btn-save {
+    margin-top: 24px;
+    padding: 12px;
+    width: 100%;
+    background-color: #00c896;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-task-form .btn-save:hover {
+    background-color: #00b083;
+}
+
+/* ===============================
+   Styling Khusus Halaman Edit Subtask
+   =============================== */
+   body#edit-subtask-page {
+    background: linear-gradient(135deg, #2c2c44, #3a4e63);
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: #fff;
+}
+
+.edit-subtask-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    padding: 28px 36px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    max-width: 500px;
+}
+
+.edit-subtask-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.edit-subtask-form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: 500;
+}
+
+.edit-subtask-form .form-control {
+    width: 100%;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    outline: none;
+}
+
+.edit-subtask-form select.form-control {
+    appearance: none;
+}
+
+.edit-subtask-form .btn-save {
+    margin-top: 24px;
+    padding: 12px;
+    width: 100%;
+    background-color: #ffc75f;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-subtask-form .btn-save:hover {
+    background-color: #fcb93d;
+}
+

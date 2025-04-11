@@ -1,46 +1,60 @@
 <?php
 include 'koneksi.php';
 
-if (isset($_POST['register'])) {
-    $username = mysqli_real_escape_string($conn_todolist, $_POST['username']);
-    $email = mysqli_real_escape_string($conn_todolist, $_POST['email']);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (!isset($_POST['username'], $_POST['email'], $_POST['password'], $_POST['confirm_password'])) {
+        die("Error: Data tidak lengkap.");
+    }
+
+    $username = trim($_POST['username']);
+    $email = trim($_POST['email']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
+    // Cek apakah password dan konfirmasi cocok
     if ($password !== $confirm_password) {
-        echo "Password dan konfirmasi password tidak cocok.";
+        echo "<script>alert('Password dan konfirmasi password tidak cocok.'); window.location.href='register1.php';</script>";
         exit;
     }
 
-    // 🔍 **Cek apakah email sudah terdaftar**
-    $check_query = "SELECT * FROM users WHERE email='$email'";
-    $check_result = mysqli_query($conn_todolist, $check_query);
+    // Cek apakah email sudah terdaftar
+    $check_query = "SELECT id FROM users WHERE email = ?";
+    $stmt_check = mysqli_prepare($conn_todolist, $check_query);
+    mysqli_stmt_bind_param($stmt_check, "s", $email);
+    mysqli_stmt_execute($stmt_check);
+    mysqli_stmt_store_result($stmt_check);
 
-    if (mysqli_num_rows($check_result) > 0) {
-        echo "Email sudah terdaftar! Gunakan email lain.";
+    if (mysqli_stmt_num_rows($stmt_check) > 0) {
+        echo "<script>alert('Email sudah terdaftar! Gunakan email lain.'); window.location.href='register1.php';</script>";
         exit;
     }
+    mysqli_stmt_close($stmt_check);
 
-    // **Hash password sebelum disimpan**
+    // Hash password sebelum disimpan
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // **Simpan user baru**
-    $query = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$hashed_password')";
-    if (mysqli_query($conn_todolist, $query)) {
+    // Simpan user baru ke database
+    $query = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+    $stmt = mysqli_prepare($conn_todolist, $query);
+    mysqli_stmt_bind_param($stmt, "sss", $username, $email, $hashed_password);
+
+    if (mysqli_stmt_execute($stmt)) {
         $user_id = mysqli_insert_id($conn_todolist);
+        mysqli_stmt_close($stmt);
 
-        // **Catat di history bahwa user melakukan registrasi**
-        $history_query = "INSERT INTO history (user_id, action) VALUES ('$user_id', 'register')";
-        mysqli_query($conn_todolist, $history_query);
+        // Simpan ke history bahwa user melakukan registrasi
+        $history_query = "INSERT INTO history (user_id, action) VALUES (?, 'register')";
+        $stmt_history = mysqli_prepare($conn_todolist, $history_query);
+        mysqli_stmt_bind_param($stmt_history, "i", $user_id);
+        mysqli_stmt_execute($stmt_history);
+        mysqli_stmt_close($stmt_history);
 
-        header("Location: login2.php");
+        echo "<script>alert('Registrasi berhasil! Silakan login.'); window.location.href='login2.php';</script>";
         exit;
     } else {
-        echo "Registrasi gagal. Silakan coba lagi.";
+        echo "<script>alert('Registrasi gagal. Silakan coba lagi.'); window.location.href='register1.php';</script>";
     }
 }
-?>
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +63,7 @@ if (isset($_POST['register'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles2.css">
 </head>
 <body>
     <div class="global-container">

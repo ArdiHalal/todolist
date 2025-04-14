@@ -128,6 +128,7 @@ $pending_tasks = mysqli_fetch_assoc($run_q_pending)['total'];
                         <input type="text" name="nama_task" class="form-control mb-2" placeholder="Nama Task" required>
                         <input type="date" name="deadline" class="form-control mb-2" required min="<?= date('Y-m-d') ?>">
                         <select name="prioritas" class="form-control mb-2" required>
+                            <option value="" disabled selected>Pilih Prioritas</option>
                             <option value="Tinggi">Tinggi</option>
                             <option value="Sedang">Sedang</option>
                             <option value="Rendah">Rendah</option>

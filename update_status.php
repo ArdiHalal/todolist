@@ -44,7 +44,7 @@ try {
 
         // 2. Masukkan ke tabel completed_task
         $stmt_insert = mysqli_prepare($conn_todolist, 
-            "INSERT INTO completed_task 
+            "INSERT INTO completed_tasks 
             (task_id, user_id, nama_tugas, deadline, prioritas, status, completed_at) 
             VALUES (?, ?, ?, ?, ?, ?, NOW())"
         );

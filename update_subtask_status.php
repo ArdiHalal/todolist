@@ -4,10 +4,16 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $subtaskId = intval($_POST['id']);
-    $newStatus = $_POST['status'];
+    $input = json_decode(file_get_contents('php://input'), true);
+    $subtaskId = intval($input['id']);
+    $newStatus = $input['status'];
 
-    $query = "UPDATE sub_tasks SET status='$newStatus' WHERE id='$subtaskId'";
+    if ($newStatus === 'Selesai') {
+        $query = "UPDATE sub_tasks SET status='Selesai' WHERE id='$subtaskId'";
+    } else {
+        $query = "UPDATE sub_tasks SET status='$newStatus' WHERE id='$subtaskId'";
+    }
+    
     if (mysqli_query($conn_todolist, $query)) {
         echo json_encode(['success' => true]);
     } else {

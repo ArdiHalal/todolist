@@ -22,19 +22,32 @@
     }
 
     body {
-      background-image: url("bglp.jpg");
-      color: var(--text-light);
-      font-family: 'Poppins', sans-serif;
-      background-image: 
-        radial-gradient(circle at 10% 20%, rgba(181, 234, 215, 0.1) 0%, transparent 20%),
-        radial-gradient(circle at 90% 80%, rgba(230, 230, 250, 0.1) 0%, transparent 20%);
-      background-attachment: fixed;
-    }
+  background-image: url("Landingpage.jpg"),
+    radial-gradient(circle at 10% 20%, rgba(181, 234, 215, 0.1) 0%, transparent 20%),
+    radial-gradient(circle at 90% 80%, rgba(230, 230, 250, 0.1) 0%, transparent 20%);
+  background-size: cover; /* Membuat gambar background full layar */
+  background-repeat: no-repeat; /* Mencegah pengulangan gambar */
+  background-position: center; /* Memposisikan gambar di tengah */
+  background-attachment: fixed;
+  color: var(--text-light);
+  font-family: 'Poppins', sans-serif;
+}
+
 
     .navbar {
-      background-color: rgba(30, 30, 47, 0.9) !important;
+      background-color: rgba(33, 142, 175, 0.9) !important;
       backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      min-height: 60px;
+    }
+
+    .navbar-brand img {
+      width: 65px;
+      height: 65px;
+      object-fit: cover;
+      border-radius: 50%;
     }
 
     .hero {
@@ -152,7 +165,9 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark px-3 py-3">
     <div class="container-fluid">
-      <a class="navbar-brand fw-bold" href="#">Todo Ardi</a>
+    <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#">
+    <img src="logo.png" alt="Logo">Todo Ardi </a>
+
       <div>
         <a href="login2.php" class="btn btn-outline-light me-2">Login</a>
         <a href="register1.php" class="btn btn-outline-light">Register</a>

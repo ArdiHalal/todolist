@@ -1,9 +1,9 @@
 <?php
 session_start();
 $host = "localhost";
-$user = "root";
-$pass = "";
-$db1 = "todolistfix";
+$user = "ardz9358_arditaUjikomInternal";
+$pass = "DitttStayHalal321*";
+$db1 = "ardz9358_ardita_ujikomInternal";
 
 // Koneksi ke database to-do list
 $conn_todolist = mysqli_connect($host, $user, $pass, $db1);

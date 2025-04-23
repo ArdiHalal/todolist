@@ -42,13 +42,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user_id = mysqli_insert_id($conn_todolist);
         mysqli_stmt_close($stmt);
 
-        // Simpan ke history bahwa user melakukan registrasi
-        $history_query = "INSERT INTO history (user_id, action) VALUES (?, 'register')";
-        $stmt_history = mysqli_prepare($conn_todolist, $history_query);
-        mysqli_stmt_bind_param($stmt_history, "i", $user_id);
-        mysqli_stmt_execute($stmt_history);
-        mysqli_stmt_close($stmt_history);
-
         echo "<script>alert('Registrasi berhasil! Silakan login.'); window.location.href='login2.php';</script>";
         exit;
     } else {
@@ -63,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles2.css">
+    <link rel="stylesheet" href="styles2r.css">
 </head>
 <body>
     <div class="global-container">

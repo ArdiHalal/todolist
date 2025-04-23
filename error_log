@@ -1,0 +1,9 @@
+[20-Apr-2025 20:41:46 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/ardz9358/public_html/koneksi.php on line 9
+[20-Apr-2025 20:45:14 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/1044): Access denied for user 'ardz9358_arditaUjikom'@'localhost' to database 'ardz9358_ujikomInternal' in /home/ardz9358/public_html/koneksi.php on line 9
+[20-Apr-2025 20:45:16 Asia/Jakarta] PHP Warning:  mysqli_connect(): (HY000/1044): Access denied for user 'ardz9358_arditaUjikom'@'localhost' to database 'ardz9358_ujikomInternal' in /home/ardz9358/public_html/koneksi.php on line 9
+[21-Apr-2025 07:20:12 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'Selesai' (T_STRING), expecting ';' or ',' in /home/ardz9358/public_html/get_subtasks.php on line 74
+[21-Apr-2025 07:20:17 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'Selesai' (T_STRING), expecting ';' or ',' in /home/ardz9358/public_html/get_subtasks.php on line 74
+[21-Apr-2025 07:20:17 Asia/Jakarta] PHP Parse error:  syntax error, unexpected 'Selesai' (T_STRING), expecting ';' or ',' in /home/ardz9358/public_html/get_subtasks.php on line 74
+[21-Apr-2025 08:55:23 Asia/Jakarta] PHP Warning:  mysqli_stmt_bind_param() expects parameter 1 to be mysqli_stmt, bool given in /home/ardz9358/public_html/hapus_tasks.php on line 14
+[21-Apr-2025 08:55:23 Asia/Jakarta] PHP Warning:  mysqli_stmt_execute() expects parameter 1 to be mysqli_stmt, bool given in /home/ardz9358/public_html/hapus_tasks.php on line 15
+[21-Apr-2025 08:55:23 Asia/Jakarta] PHP Warning:  mysqli_stmt_close() expects parameter 1 to be mysqli_stmt, bool given in /home/ardz9358/public_html/hapus_tasks.php on line 16

@@ -10,6 +10,7 @@ $user_id = $_SESSION['user_id'];
 
 // Ambil filter dari URL (jika ada)
 $filter_prioritas = isset($_GET['prioritas']) ? $_GET['prioritas'] : '';
+$filter_tanggal_mulai = isset($_GET['tanggal_mulai']) ? $_GET['tanggal_mulai'] : '';
 $filter_deadline = isset($_GET['deadline']) ? $_GET['deadline'] : '';
 $filter_status = isset($_GET['status']) ? $_GET['status'] : '';
 
@@ -61,6 +62,14 @@ $user = mysqli_fetch_assoc($run_q_user);
 $q_pending = "SELECT COUNT(*) as total FROM tasks WHERE user_id='$user_id' AND status='Belum Selesai'";
 $run_q_pending = mysqli_query($conn_todolist, $q_pending);
 $pending_tasks = mysqli_fetch_assoc($run_q_pending)['total'];
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['hapus_semua'])) {
+    $hapus_semua = "DELETE FROM tasks WHERE user_id='$user_id'";
+    mysqli_query($conn_todolist, $hapus_semua);
+    header("Location: tasks.php");
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -70,9 +79,21 @@ $pending_tasks = mysqli_fetch_assoc($run_q_pending)['total'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do List</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
+        body {
+          background-image: url("Task.jpg"),
+            radial-gradient(circle at 10% 20%, rgba(181, 234, 215, 0.1) 0%, transparent 20%),
+            radial-gradient(circle at 90% 80%, rgba(230, 230, 250, 0.1) 0%, transparent 20%);
+          background-size: cover; /* Membuat gambar background full layar */
+          background-repeat: no-repeat; /* Mencegah pengulangan gambar */
+          background-position: center; /* Memposisikan gambar di tengah */
+          background-attachment: fixed;
+          color: var(--text-light);
+          font-family: 'Poppins', sans-serif;
+        }
+
         .border-danger {
             border: 2px solid #dc3545 !important;
         }
@@ -105,12 +126,27 @@ $pending_tasks = mysqli_fetch_assoc($run_q_pending)['total'];
 </div>
 
 <!-- Sidebar -->
+<?php
+$current_page = basename($_SERVER['PHP_SELF']);
+?>
+
+<!-- Sidebar -->
 <div class="sidebar" id="sidebar">
     <h3 class="text-center text-white">Dashboard</h3>
-    <a href="home.php">🏠 Home</a>
-    <a href="tasks.php">📝 Tasks</a>
-    <a href="profile.php">👤 Profile</a>
+    <a href="home.php" class="<?= $current_page == 'home.php' ? 'active' : '' ?>">🏠 Home</a>
+    <a href="tasks.php" class="<?= $current_page == 'tasks.php' ? 'active' : '' ?>">📝 Tasks</a>
+    
+    <?php if ($current_page == 'tasks.php'): ?>
+        <a href="tambah_tasks.php">+ Tambah Task</a>
+    <?php endif; ?>
+
+    <?php if ($current_page == 'tasks.php'): ?>
+        <a href="history.php">🕓 Riwayat Tugas</a>
+    <?php endif; ?>
+
+    <a href="profile.php" class="<?= $current_page == 'profile.php' ? 'active' : '' ?>">👤 Profile</a>
 </div>
+
 
 <div class="container mt-5">
     <div class="row">
@@ -118,25 +154,8 @@ $pending_tasks = mysqli_fetch_assoc($run_q_pending)['total'];
         <div class="col-md-8 center-task-panel" id="task-panel">
             <div class="card bg-secondary text-white p-4 shadow-lg">
                 <h2 class="text-center mb-4 text-white">📝 To-Do List</h2>
-                
-                <!-- Tombol "+" untuk menampilkan form -->
-                <button id="addTaskButton" class="btn btn-primary mb-3">Tambah Task</button>
 
-                <!-- Form Tambah Task (awalnya disembunyikan) -->
-                <div id="addTaskForm" style="display: none;">
-                    <form action="tambah_tasks.php" method="post">
-                        <input type="text" name="nama_task" class="form-control mb-2" placeholder="Nama Task" required>
-                        <input type="date" name="deadline" class="form-control mb-2" required min="<?= date('Y-m-d') ?>">
-                        <select name="prioritas" class="form-control mb-2" required>
-                            <option value="" disabled selected>Pilih Prioritas</option>
-                            <option value="Tinggi">Tinggi</option>
-                            <option value="Sedang">Sedang</option>
-                            <option value="Rendah">Rendah</option>
-                        </select>
-                        <button type="submit" class="btn btn-primary me-3 mb-3 mt-3">Simpan Task</button>
-                        <button type="button" class="btn btn-primary" onclick="hideAddTaskForm()">Batal</button>
-                    </form>
-                </div>
+                
 
                 <!-- Form Filter -->
                 <form method="get" class="mb-4">
@@ -166,9 +185,15 @@ $pending_tasks = mysqli_fetch_assoc($run_q_pending)['total'];
                             </select>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary me-3">Apply Filter</button>
-                    <a href="tasks.php" class="btn btn-primary">Reset Filter</a>
+                    <button type="submit" class="btn btn-primary me-2">Apply Filter</button>
+                    <a href="tasks.php" class="btn btn-primary  ">Reset Filter</a>
+                    <a href="history.php" class="btn btn-primary ms-2 ">History Task </a>
+
                 </form>
+                <form method="post" onsubmit="return confirm('Yakin ingin menghapus semua task?')">
+                    <button type="submit" name="hapus_semua" class="btn btn-danger">🗑 Hapus Semua Task</button>
+                </form>
+
 
                 <!-- Daftar Task -->
                 <?php while ($task = mysqli_fetch_assoc($run_q_tasks)) { ?>
@@ -179,6 +204,11 @@ $pending_tasks = mysqli_fetch_assoc($run_q_pending)['total'];
                                 <span class="badge bg-danger">Deadline Terlewat!</span>
                             <?php endif; ?>
                         </h3>
+                        <p>📝 Deksripsi Task : <?= htmlspecialchars($task['deskripsi_tugas']) ?> 
+
+                        </p>
+                        <p>📅 Tanggal Mulai : <?= htmlspecialchars($task['created_at']) ?> 
+                        </p>
                         <p>📅 Deadline: <?= htmlspecialchars($task['deadline']) ?> 
                             <?php if ($task['deadline_status'] == 'Terlewat' && $task['status'] == 'Belum Selesai'): ?>
                                 <span class="text-danger">(Terlewat!)</span>
@@ -187,13 +217,13 @@ $pending_tasks = mysqli_fetch_assoc($run_q_pending)['total'];
                         <p>🔥 Prioritas: <?= htmlspecialchars($task['prioritas']) ?></p>
                         <p>✅ Status: 
                             <select onchange="updateTaskStatus(<?= $task['id'] ?>, this.value)">
-                                <option value="Belum Selesai" <?= $task['status'] == 'Belum Selesai' ? 'elected' : '' ?>>Belum Selesai</option>
+                                <option value="Belum Selesai" <?= $task['status'] == 'Belum Selesai' ? 'selected' : '' ?>>Belum Selesai</option>
                                 <option value="Selesai" <?= $task['status'] == 'Selesai' ? 'selected' : '' ?>>Selesai</option>
                             </select>
                         </p>
-                            <a href="edit_tasks.php?id=<?= $task['id'] ?>" class="btn btn-sm btn-warning m-1">Update Task</a>
+                            <a href="edit_tasks.php?id=<?= $task['id'] ?>" class="btn btn-sm btn-warning m-1">Edit Task</a>
                             <a href="javascript:void(0);" class="btn btn-sm btn-danger m-1" 
-                            onclick="confirmDelete(<?= $task['id'] ?>)">Delete Task</a>
+                            onclick="confirmDelete(<?= $task['id'] ?>)">Hapus Task</a>
                                  <button class="btn btn-sm btn-info m-1" onclick="showSubtask(<?= $task['id'] ?>, '<?= htmlspecialchars($task['nama_tugas']) ?>')">Lihat Subtask</button>
                     </div>
                 <?php } ?>
@@ -203,7 +233,7 @@ $pending_tasks = mysqli_fetch_assoc($run_q_pending)['total'];
         <!-- Kolom Kanan: Panel Subtask -->
         <div class="col-md-4" id="subtask-panel">
             <div class="card bg-secondary text-white p-4 shadow-lg">
-                <h3 class="text-center" id="subtask-title">Subtask</h3>
+                <h3 class="text-center text-white" id="subtask-title">Subtask</h3>
                 <div class="loading-spinner" id="loading-spinner"></div>
                 <div id="subtask-content">
                     <!-- Konten subtask akan dimuat di sini via AJAX -->
@@ -215,14 +245,7 @@ $pending_tasks = mysqli_fetch_assoc($run_q_pending)['total'];
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Fungsi untuk menampilkan/sembunyikan form tambah task
-    document.getElementById('addTaskButton').addEventListener('click', function () {
-        document.getElementById('addTaskForm').style.display = 'block';
-    });
 
-    function hideAddTaskForm() {
-        document.getElementById('addTaskForm').style.display = 'none';
-    }
 
     // Fungsi lainnya (update status, konfirmasi hapus, dll.)
     function updateTaskStatus(taskId, newStatus) {
@@ -293,6 +316,29 @@ $pending_tasks = mysqli_fetch_assoc($run_q_pending)['total'];
             }
         });
     }
+    
+    function updateSubtaskStatus(subtaskId, checkbox) {
+    const newStatus = checkbox.checked ? "Selesai" : "Belum Selesai";
+    fetch("update_subtask_status.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ id: subtaskId, status: newStatus })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert("Status subtask berhasil diupdate!");
+            location.reload(); // Reload halaman untuk menampilkan perubahan
+        } else {
+            alert("Gagal mengupdate status: " + data.message);
+        }
+    })
+    .catch(error => {
+        alert("Terjadi kesalahan pada server");
+    });
+}
 
     function hideSubtask() {
         document.getElementById('subtask-panel').classList.remove('show');

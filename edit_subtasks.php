@@ -34,12 +34,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Subtask</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css"> <!-- CSS eksternal -->
+    <link rel="stylesheet" href="style.css"> 
+    <style>
+        body {
+          background-image: url("Edit.jpg"),
+            radial-gradient(circle at 10% 20%, rgba(181, 234, 215, 0.1) 0%, transparent 20%),
+            radial-gradient(circle at 90% 80%, rgba(230, 230, 250, 0.1) 0%, transparent 20%);
+          background-size: cover; /* Membuat gambar background full layar */
+          background-repeat: no-repeat; /* Mencegah pengulangan gambar */
+          background-position: center; /* Memposisikan gambar di tengah */
+          background-attachment: fixed;
+          color: var(--text-light);
+          font-family: 'Poppins', sans-serif;
+        }
+
+    </style>
 </head>
 <body>
-<div class="container d-flex justify-content-center">
-    <div class="card custom-card p-4 w-100" style="max-width: 500px;">
-        <h4 class="mb-3">Edit Subtask</h4>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="card w-100" style="max-width: 600px;">
+            <div class="card-body">
+                <h4 class="card-title mb-4">Edit SubTask</h4>
 
         <?php if ($subtask): ?>
             <form method="POST">

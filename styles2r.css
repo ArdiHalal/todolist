@@ -1,0 +1,107 @@
+html,
+body {
+  display: flex;
+  justify-content: center;  /* Pusat secara horizontal */
+  align-items: center;      /* Pusat secara vertikal */
+  height: 100vh;            /* 100% tinggi viewport */
+  margin: 0;                /* Hilangkan margin bawaan */
+  background-image: url("LoginRegister.jpg"),
+    radial-gradient(circle at 10% 20%, rgba(181, 234, 215, 0.1) 0%, transparent 20%),
+    radial-gradient(circle at 90% 80%, rgba(230, 230, 250, 0.1) 0%, transparent 20%);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  color: var(--text-light);
+  font-family: 'Poppins', sans-serif;
+}
+
+
+.global-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #90ee90;
+}
+
+.login-form {
+  width: 380px;
+  padding: 20px;
+  height: fit-content;
+  background: #1a2226;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.8);
+}
+
+/* Perbaikan selector input */
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  background: #1a2226;
+  color: #fff;
+  border: 2px solid #90ee90;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+/* Tambahkan selector untuk confirm password */
+input[type="password"][name="confirm_password"] {
+  width: 100%;
+  background: #1a2226;
+  color: #fff;
+  border: 2px solid #90ee90;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #48e248;
+  background: #222d32; /* Tambahkan warna latar belakang saat focus */
+}
+
+.card-title {
+  font-weight: 900;
+  text-align: center;
+  color: #90ee90;
+  margin-bottom: 30px;
+}
+
+.btn-custom {
+  width: 100%;
+  background: #90ee90;
+  color: #000;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 10px;
+  border: none;
+}
+
+.btn-custom:hover {
+  background: #90ee90;
+}
+
+.button-link {
+  color: #90ee90;
+  text-decoration: none;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 15px;
+  color: #fff;
+}
+
+.login-link a {
+  color: #48e248;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}

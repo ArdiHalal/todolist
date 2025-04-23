@@ -41,8 +41,22 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <title>Edit Task</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+          background-image: url("Edit.jpg"),
+            radial-gradient(circle at 10% 20%, rgba(181, 234, 215, 0.1) 0%, transparent 20%),
+            radial-gradient(circle at 90% 80%, rgba(230, 230, 250, 0.1) 0%, transparent 20%);
+          background-size: cover; /* Membuat gambar background full layar */
+          background-repeat: no-repeat; /* Mencegah pengulangan gambar */
+          background-position: center; /* Memposisikan gambar di tengah */
+          background-attachment: fixed;
+          color: var(--text-light);
+          font-family: 'Poppins', sans-serif;
+        }
+
+    </style>
 </head>
 <body>
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
